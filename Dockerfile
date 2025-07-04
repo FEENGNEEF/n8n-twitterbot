@@ -1,11 +1,19 @@
 FROM n8nio/n8n:latest
 
-# ENV proměnné - tyhle jsou naplněny v Railway UI
+# Nastavení proměnných prostředí (Railway si je předá z UI)
 ENV DB_TYPE=postgresdb
-ENV N8N_BASIC_AUTH_ACTIVE=true
+ENV DB_POSTGRESDB_DATABASE=${PGDATABASE}
+ENV DB_POSTGRESDB_HOST=${PGHOST}
+ENV DB_POSTGRESDB_PORT=${PGPORT}
+ENV DB_POSTGRESDB_USER=${PGUSER}
+ENV DB_POSTGRESDB_PASSWORD=${PGPASSWORD}
 
-# otevři port 5678
+ENV N8N_BASIC_AUTH_ACTIVE=true
+ENV N8N_BASIC_AUTH_USER=${USERNAME}
+ENV N8N_BASIC_AUTH_PASSWORD=${PASSWORD}
+
+# Otevřít port n8n UI
 EXPOSE 5678
 
-# Spusť n8n přímo bez npx
-CMD ["n8n"]
+# Spustit n8n přes npx
+CMD ["npx", "n8n"]
